@@ -84,7 +84,7 @@ a { color: inherit; }
 .main-nav {
   margin-left: auto;
   display: flex;
-  gap: 22px;
+  gap: 38px;
 }
 
 .main-nav a {
