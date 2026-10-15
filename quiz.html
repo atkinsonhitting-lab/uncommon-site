@@ -32,6 +32,12 @@
   .quiz-result-fix strong { display: block; margin-bottom: 8px; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--red-bright); }
   .quiz-result-fix p { color: var(--muted); line-height: 1.65; margin: 0; }
   .quiz-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+  .quiz-breakdown { margin: 32px 0; }
+  .quiz-breakdown h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.01em; }
+  .quiz-breakdown-item { border: 1px solid var(--line); border-radius: 12px; padding: 20px; background: #0a0a0a; margin-bottom: 12px; }
+  .quiz-breakdown-q { font-weight: 700; margin: 0 0 10px; line-height: 1.45; }
+  .quiz-breakdown-elite { color: var(--red-bright); margin: 0 0 8px; font-size: .95rem; }
+  .quiz-breakdown-why { color: var(--muted); margin: 0; font-size: .95rem; line-height: 1.6; }
   .hidden { display: none !important; }
   @media (max-width: 640px) {
     .quiz-intro h1 { font-size: 2rem; }
@@ -81,8 +87,9 @@
     <p class="quiz-q">Where should we send your result?</p>
     <input type="text" id="gate-name" placeholder="Your name" autocomplete="name">
     <input type="tel" id="gate-phone" placeholder="Phone number" autocomplete="tel">
+    <input type="email" id="gate-email" placeholder="Email (optional)" autocomplete="email">
     <button class="btn btn-primary" id="gate-submit" onclick="submitGate()">Unlock my result</button>
-    <p class="quiz-note">Your result shows right here. Bobby may text you about it — that's it, no spam.</p>
+    <p class="quiz-note">Your result shows right here. By unlocking, you agree Bobby may text and email you about the program — no spam, unsubscribe anytime.</p>
   </div>
 
   <!-- RESULT -->
@@ -95,6 +102,10 @@
     <div class="quiz-result-fix">
       <strong>How UNCOMMON fixes it</strong>
       <p id="result-fix"></p>
+    </div>
+    <div class="quiz-breakdown">
+      <h3>What elite hitters do <span style="color:var(--muted); font-weight:400;">— question by question</span></h3>
+      <div id="breakdown-list"></div>
     </div>
     <div class="quiz-cta-row">
       <a href="index.html#apply" class="btn btn-primary">Apply for UNCOMMON</a>
@@ -116,75 +127,84 @@
 <script>
 const QUESTIONS = [
   {
-    q: "It's 0-0, first pitch of the at-bat. What's going through your head?",
+    q: "Do you have a clear and simple plan every time you step in the box in a game?",
+    elite: "Elite hitters step in with one simple plan — what they're hunting and where. Simple is fast. Complicated is slow, and the pitch doesn't wait.",
     a: [
-      { t: "Nothing. See ball, hit ball.", s: "uncommon" },
-      { t: "Don't mess this at-bat up.", s: "shrinking" },
-      { t: "Let me see a pitch first.", s: "passive" },
-      { t: "Hands back, stay through it, don't pull off.", s: "overthinker" }
+      { t: "Yes — one simple plan, every at-bat.", s: "uncommon" },
+      { t: "I have a plan, but it's different every time.", s: "overthinker" },
+      { t: "Not really — I just get in there and react.", s: "passive" },
+      { t: "My plan is basically 'don't fail.'", s: "shrinking" }
     ]
   },
   {
-    q: "You just struck out looking. Walking back to the dugout, you think…",
+    q: "Do you have a clear and simple plan for every training session?",
+    elite: "Elite hitters don't 'go hit.' They show up knowing exactly what they're training and why. Random reps build random hitters.",
     a: [
-      { t: "Flush it. Same approach next time.", s: "uncommon" },
-      { t: "I can't let that happen again.", s: "shrinking" },
-      { t: "At least I didn't chase.", s: "passive" },
-      { t: "My timing was off — I need to fix my load.", s: "overthinker" }
+      { t: "Yes — I know what I'm working on before I show up.", s: "uncommon" },
+      { t: "Kind of — I hit until my swing feels good.", s: "passive" },
+      { t: "No — I just do whatever drills I feel like.", s: "passive" },
+      { t: "I overplan and never get through it all.", s: "overthinker" }
     ]
   },
   {
-    q: "Bases loaded, 2 outs, tie game. Bottom of the 7th. You feel…",
+    q: "Do you have a specific goal for every rep you take?",
+    elite: "Elite hitters give every swing a job — drive this pitch to right-center, stay through this one. A rep without intent is just exercise.",
     a: [
-      { t: "This is what I live for.", s: "uncommon" },
-      { t: "Please don't let me be the guy who fails here.", s: "shrinking" },
-      { t: "Just put it in play, don't strike out.", s: "passive" },
-      { t: "Stay inside it. Short to the ball.", s: "overthinker" }
+      { t: "Yes — every swing has a job.", s: "uncommon" },
+      { t: "Sometimes, when I remember to.", s: "overthinker" },
+      { t: "No — I just take my hacks.", s: "passive" },
+      { t: "My goal is just to not look bad.", s: "shrinking" }
     ]
   },
   {
-    q: "Be honest: your cage swing vs. your game swing — how different are they?",
+    q: "When you train — are you trying to make your swing feel good, or challenge yourself?",
+    elite: "Elite hitters train at the edge of failure. If every rep feels smooth, you're not getting better — you're rehearsing what you already do. Growth lives in the uncomfortable reps.",
     a: [
-      { t: "Same swing. Every time.", s: "uncommon" },
-      { t: "My game swing is way tighter. I press.", s: "shrinking" },
-      { t: "In games I take way too many pitches.", s: "passive" },
-      { t: "In games I'm thinking about 3 things at once.", s: "overthinker" }
+      { t: "Challenge myself — I train things that are hard.", s: "uncommon" },
+      { t: "Feel good — I want to leave the cage confident.", s: "shrinking" },
+      { t: "Honestly, I just go through the motions.", s: "passive" },
+      { t: "I drill mechanics until they feel perfect.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "Do you have a consistent routine?",
+    elite: "Elite hitters do the same thing every time — same breath, same reset, same step-in. The routine isn't superstition. It's how you get your brain out of the way and let training take over.",
+    a: [
+      { t: "Yes — same routine, every game.", s: "uncommon" },
+      { t: "I have one, but I skip it when I'm nervous.", s: "shrinking" },
+      { t: "No, I just get in the box.", s: "passive" },
+      { t: "My routine is running through mechanical cues.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "What's your mindset before stepping into the box?",
+    elite: "Elite hitters step in expecting to do damage. Not hoping — expecting. Fear makes your swing careful. Careful gets you beat.",
+    a: [
+      { t: "I'm going to do damage.", s: "uncommon" },
+      { t: "Don't embarrass yourself.", s: "shrinking" },
+      { t: "Scared. Afraid to fail.", s: "shrinking" },
+      { t: "Just see the ball and react.", s: "passive" },
+      { t: "Remember my mechanics.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "What's the first thing you check after each swing?",
+    elite: "Elite hitters check the pitch first — was it the right pitch to swing at? Swing decisions win at-bats. Mechanics are trained during the week, not judged pitch to pitch.",
+    a: [
+      { t: "The pitch — was it the right one to swing at?", s: "uncommon" },
+      { t: "My swing — did my mechanics look right?", s: "overthinker" },
+      { t: "The result — where did the ball go?", s: "passive" },
+      { t: "I try not to think about it at all.", s: "shrinking" }
     ]
   },
   {
     q: "A pitcher is dotting 90+ on the corners. Your plan is…",
+    elite: "Elite hitters shrink the zone and hunt one spot against elite arms. You can't cover everything at 90+ — so you pick your pitch and let the rest go. Discipline is aggression with a plan.",
     a: [
       { t: "Hunt one zone. Let it eat.", s: "uncommon" },
       { t: "Hopefully he walks me.", s: "shrinking" },
       { t: "Foul stuff off, battle, survive.", s: "passive" },
       { t: "Analyze every pitch and adjust my mechanics.", s: "overthinker" }
-    ]
-  },
-  {
-    q: "3-1 count. You get your pitch. You…",
-    a: [
-      { t: "Let it rip.", s: "uncommon" },
-      { t: "Still take it — what if I miss?", s: "passive" },
-      { t: "Swing, but guide it. Just make contact.", s: "shrinking" },
-      { t: "Think about staying through the zone.", s: "overthinker" }
-    ]
-  },
-  {
-    q: "After a bad game, your self-talk sounds like…",
-    a: [
-      { t: "On to the next one.", s: "uncommon" },
-      { t: "Maybe I'm just not good enough for this level.", s: "shrinking" },
-      { t: "At least I didn't embarrass myself.", s: "passive" },
-      { t: "I need to fix my swing path this week.", s: "overthinker" }
-    ]
-  },
-  {
-    q: "Do you have a mental routine before games?",
-    a: [
-      { t: "Yes — same thing every time.", s: "uncommon" },
-      { t: "I try not to think about the game at all.", s: "shrinking" },
-      { t: "Not really.", s: "passive" },
-      { t: "I run through mechanical cues in my head.", s: "overthinker" }
     ]
   }
 ];
@@ -251,6 +271,7 @@ function topProfile() {
 async function submitGate() {
   const name = document.getElementById('gate-name').value.trim();
   const phone = document.getElementById('gate-phone').value.trim();
+  const email = document.getElementById('gate-email').value.trim();
   if (!name || !phone) { alert('Drop your name and number so we can send your result.'); return; }
   const profile = topProfile();
   const btn = document.getElementById('gate-submit');
@@ -265,6 +286,7 @@ async function submitGate() {
         _subject: `UNCOMMON Quiz Lead — ${name} (${PROFILES[profile].title})`,
         name: name,
         phone: phone,
+        email: email || '(not provided)',
         result: PROFILES[profile].title,
         scores: JSON.stringify(scores)
       })
@@ -276,6 +298,15 @@ async function submitGate() {
   document.getElementById('result-title').textContent = PROFILES[profile].title;
   document.getElementById('result-body').textContent = PROFILES[profile].body;
   document.getElementById('result-fix').textContent = PROFILES[profile].fix;
+  const bl = document.getElementById('breakdown-list');
+  bl.innerHTML = '';
+  QUESTIONS.forEach((Q, i) => {
+    const item = document.createElement('div');
+    item.className = 'quiz-breakdown-item';
+    const eliteAnswer = Q.a.find(o => o.s === 'uncommon').t;
+    item.innerHTML = `<p class="quiz-breakdown-q">${i + 1}. ${Q.q}</p><p class="quiz-breakdown-elite"><strong>Elite pick:</strong> "${eliteAnswer}"</p><p class="quiz-breakdown-why">${Q.elite}</p>`;
+    bl.appendChild(item);
+  });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
