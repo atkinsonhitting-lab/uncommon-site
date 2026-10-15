@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The UNCOMMON Mental Quiz — What's Your Hitting Mentality?</title>
+<meta name="description" content="8 questions. Find out what's really holding you back at the plate.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .quiz-wrap { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; min-height: 80vh; }
+  .quiz-progress { height: 6px; background: #222; border-radius: 3px; margin: 24px 0 32px; overflow: hidden; }
+  .quiz-progress-bar { height: 100%; background: #e63946; width: 0%; transition: width .4s ease; border-radius: 3px; }
+  .quiz-q { font-size: 1.5rem; font-weight: 800; line-height: 1.3; margin-bottom: 28px; }
+  .quiz-a { display: block; width: 100%; text-align: left; background: #161616; border: 1px solid #2c2c2c; color: #f5f5f5; padding: 16px 18px; border-radius: 12px; font-size: 1.02rem; margin-bottom: 12px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .quiz-a:hover { border-color: #e63946; background: #1d1d1d; }
+  .quiz-count { color: #888; font-size: .9rem; margin-bottom: 8px; }
+  .quiz-intro h1 { font-size: 2.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+  .quiz-intro p { color: #bdbdbd; font-size: 1.08rem; line-height: 1.6; margin-bottom: 12px; }
+  .quiz-start { margin-top: 28px; }
+  .quiz-gate input { display: block; width: 100%; background: #161616; border: 1px solid #2c2c2c; color: #f5f5f5; padding: 14px 16px; border-radius: 10px; font-size: 1rem; margin-bottom: 12px; }
+  .quiz-gate input:focus { outline: none; border-color: #e63946; }
+  .quiz-note { font-size: .85rem; color: #777; margin-top: 14px; }
+  .quiz-result-label { color: #e63946; font-weight: 800; letter-spacing: 2px; font-size: .85rem; text-transform: uppercase; margin-bottom: 10px; }
+  .quiz-result-title { font-size: 2rem; font-weight: 900; margin-bottom: 16px; line-height: 1.2; }
+  .quiz-result-body { color: #c9c9c9; font-size: 1.05rem; line-height: 1.65; margin-bottom: 16px; }
+  .quiz-result-fix { background: #141414; border-left: 3px solid #e63946; padding: 16px 18px; border-radius: 0 10px 10px 0; margin: 20px 0 28px; }
+  .quiz-result-fix strong { display: block; margin-bottom: 6px; }
+  .quiz-result-fix p { color: #bdbdbd; line-height: 1.6; margin: 0; }
+  .quiz-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="wordmark">UNCOMMON</a>
+    <nav class="header-nav">
+      <a href="index.html#program">Program</a>
+      <a href="index.html#results">Results</a>
+      <a href="index.html#apply">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<main class="quiz-wrap">
+
+  <!-- INTRO -->
+  <div id="quiz-intro" class="quiz-intro">
+    <p class="eyebrow">By Bobby Atkinson</p>
+    <h1>What's your hitting mentality?</h1>
+    <p>Your swing isn't the problem. 8 questions to find out what actually is — and what to do about it.</p>
+    <p style="color:#888; font-size:.95rem;">Takes 60 seconds. Your result unlocks with your phone number.</p>
+    <button class="btn btn-primary quiz-start" onclick="startQuiz()">Start the quiz</button>
+  </div>
+
+  <!-- QUESTION -->
+  <div id="quiz-q" class="hidden">
+    <p class="quiz-count" id="quiz-count"></p>
+    <div class="quiz-progress"><div class="quiz-progress-bar" id="quiz-bar"></div></div>
+    <p class="quiz-q" id="quiz-question"></p>
+    <div id="quiz-answers"></div>
+  </div>
+
+  <!-- PHONE GATE -->
+  <div id="quiz-gate" class="quiz-gate hidden">
+    <p class="quiz-count">Last step</p>
+    <p class="quiz-q">Where should we send your result?</p>
+    <input type="text" id="gate-name" placeholder="Your name" autocomplete="name">
+    <input type="tel" id="gate-phone" placeholder="Phone number" autocomplete="tel">
+    <button class="btn btn-primary" id="gate-submit" onclick="submitGate()">Unlock my result</button>
+    <p class="quiz-note">Your result shows right here. Bobby may text you about it — that's it, no spam.</p>
+  </div>
+
+  <!-- RESULT -->
+  <div id="quiz-result" class="hidden">
+    <p class="quiz-result-label">Your hitting mentality</p>
+    <h2 class="quiz-result-title" id="result-title"></h2>
+    <p class="quiz-result-body" id="result-body"></p>
+    <div class="quiz-result-fix">
+      <strong>How UNCOMMON fixes it</strong>
+      <p id="result-fix"></p>
+    </div>
+    <div class="quiz-cta-row">
+      <a href="index.html#apply" class="btn btn-primary">Apply for UNCOMMON</a>
+      <a href="index.html" class="btn btn-secondary">See the program</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p class="wordmark" style="font-size:1.2rem;">UNCOMMON</p>
+  <p>By Bobby Atkinson &middot; <a href="index.html" style="color:#888;">Back to the program</a></p>
+</footer>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "It's 0-0, first pitch of the at-bat. What's going through your head?",
+    a: [
+      { t: "Nothing. See ball, hit ball.", s: "uncommon" },
+      { t: "Don't mess this at-bat up.", s: "shrinking" },
+      { t: "Let me see a pitch first.", s: "passive" },
+      { t: "Hands back, stay through it, don't pull off.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "You just struck out looking. Walking back to the dugout, you think…",
+    a: [
+      { t: "Flush it. Same approach next time.", s: "uncommon" },
+      { t: "I can't let that happen again.", s: "shrinking" },
+      { t: "At least I didn't chase.", s: "passive" },
+      { t: "My timing was off — I need to fix my load.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "Bases loaded, 2 outs, tie game. Bottom of the 7th. You feel…",
+    a: [
+      { t: "This is what I live for.", s: "uncommon" },
+      { t: "Please don't let me be the guy who fails here.", s: "shrinking" },
+      { t: "Just put it in play, don't strike out.", s: "passive" },
+      { t: "Stay inside it. Short to the ball.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "Be honest: your cage swing vs. your game swing — how different are they?",
+    a: [
+      { t: "Same swing. Every time.", s: "uncommon" },
+      { t: "My game swing is way tighter. I press.", s: "shrinking" },
+      { t: "In games I take way too many pitches.", s: "passive" },
+      { t: "In games I'm thinking about 3 things at once.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "A pitcher is dotting 90+ on the corners. Your plan is…",
+    a: [
+      { t: "Hunt one zone. Let it eat.", s: "uncommon" },
+      { t: "Hopefully he walks me.", s: "shrinking" },
+      { t: "Foul stuff off, battle, survive.", s: "passive" },
+      { t: "Analyze every pitch and adjust my mechanics.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "3-1 count. You get your pitch. You…",
+    a: [
+      { t: "Let it rip.", s: "uncommon" },
+      { t: "Still take it — what if I miss?", s: "passive" },
+      { t: "Swing, but guide it. Just make contact.", s: "shrinking" },
+      { t: "Think about staying through the zone.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "After a bad game, your self-talk sounds like…",
+    a: [
+      { t: "On to the next one.", s: "uncommon" },
+      { t: "Maybe I'm just not good enough for this level.", s: "shrinking" },
+      { t: "At least I didn't embarrass myself.", s: "passive" },
+      { t: "I need to fix my swing path this week.", s: "overthinker" }
+    ]
+  },
+  {
+    q: "Do you have a mental routine before games?",
+    a: [
+      { t: "Yes — same thing every time.", s: "uncommon" },
+      { t: "I try not to think about the game at all.", s: "shrinking" },
+      { t: "Not really.", s: "passive" },
+      { t: "I run through mechanical cues in my head.", s: "overthinker" }
+    ]
+  }
+];
+
+const PROFILES = {
+  overthinker: {
+    title: "The Overthinker",
+    body: "Your swing is fine. Your brain is the problem. You're running mechanical cues in the box — hands, hips, path — and by the time you've thought through all of it, the pitch is in the catcher's mitt. Thinking is slow. Hitting is fast. Every mechanical thought in the box costs you a tenth of a second you don't have.",
+    fix: "UNCOMMON installs a Lock In routine: one thought, same every at-bat, built around competing — not mechanics. You train your swing during the week so you can trust it on game day. Thinking ends when the at-bat starts."
+  },
+  shrinking: {
+    title: "The Shrinking Hitter",
+    body: "You play smaller in games than you are in practice. The cage version of you barrels everything. The game version hopes not to fail. That's not a swing problem — it's an identity problem. You've made the moment bigger than you, so your swing gets careful, tight, and late.",
+    fix: "UNCOMMON rebuilds how you see yourself in big moments: approach-first, compete-first. You learn to want the at-bat instead of surviving it. The hitters who change the most in this program start here."
+  },
+  passive: {
+    title: "The Passive Hitter",
+    body: "You're letting the at-bat happen to you. Too many hittable pitches watched, too many counts fallen behind in, too many at-bats where the pitcher never felt threatened. Pitchers love facing you — you're doing their job for them.",
+    fix: "UNCOMMON gives you an aggression plan: what you're hunting, where, and when to let it eat. Swing decisions get trained like mechanics — with video, feedback, and accountability. You stop hoping for walks and start hunting damage."
+  },
+  uncommon: {
+    title: "The Uncommon Hitter",
+    body: "Your mind is already right. You compete, you flush bad at-bats, you want the big moment. Most hitters never get here mentally — you have. So the question is: does your body match your mentality? Because the hitters getting recruited have both.",
+    fix: "UNCOMMON Complete builds the physical side to match your mind: movement, med ball, explosiveness, lifting, speed — the measurable tools that get you noticed. Your mentality is the edge. Now build the engine."
+  }
+};
+
+let qi = 0;
+let scores = { overthinker: 0, shrinking: 0, passive: 0, uncommon: 0 };
+
+function startQuiz() {
+  document.getElementById('quiz-intro').classList.add('hidden');
+  document.getElementById('quiz-q').classList.remove('hidden');
+  renderQ();
+}
+
+function renderQ() {
+  const Q = QUESTIONS[qi];
+  document.getElementById('quiz-count').textContent = `Question ${qi + 1} of ${QUESTIONS.length}`;
+  document.getElementById('quiz-bar').style.width = `${(qi / QUESTIONS.length) * 100}%`;
+  document.getElementById('quiz-question').textContent = Q.q;
+  const box = document.getElementById('quiz-answers');
+  box.innerHTML = '';
+  // shuffle answers
+  const shuffled = [...Q.a].sort(() => Math.random() - 0.5);
+  shuffled.forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'quiz-a';
+    b.textContent = opt.t;
+    b.onclick = () => { scores[opt.s]++; qi++; qi < QUESTIONS.length ? renderQ() : showGate(); };
+    box.appendChild(b);
+  });
+}
+
+function showGate() {
+  document.getElementById('quiz-q').classList.add('hidden');
+  document.getElementById('quiz-gate').classList.remove('hidden');
+}
+
+function topProfile() {
+  return Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+}
+
+async function submitGate() {
+  const name = document.getElementById('gate-name').value.trim();
+  const phone = document.getElementById('gate-phone').value.trim();
+  if (!name || !phone) { alert('Drop your name and number so we can send your result.'); return; }
+  const profile = topProfile();
+  const btn = document.getElementById('gate-submit');
+  btn.textContent = 'Unlocking…';
+  btn.disabled = true;
+  // send the lead to Bobby
+  try {
+    await fetch('https://formsubmit.co/ajax/atkinsonhitting@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `UNCOMMON Quiz Lead — ${name} (${PROFILES[profile].title})`,
+        name: name,
+        phone: phone,
+        result: PROFILES[profile].title,
+        scores: JSON.stringify(scores)
+      })
+    });
+  } catch (e) { /* lead send failed, still show result */ }
+  document.getElementById('quiz-gate').classList.add('hidden');
+  const r = document.getElementById('quiz-result');
+  r.classList.remove('hidden');
+  document.getElementById('result-title').textContent = PROFILES[profile].title;
+  document.getElementById('result-body').textContent = PROFILES[profile].body;
+  document.getElementById('result-fix').textContent = PROFILES[profile].fix;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
