@@ -659,6 +659,41 @@ h3 { font-size: 20px; }
   line-height: 1.4;
 }
 
+/* ---------- Guarantee ---------- */
+.guarantee {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #0a0a0a;
+  padding: 36px 0;
+  text-align: center;
+}
+.guarantee-label {
+  color: var(--red-bright);
+  font-weight: 800;
+  letter-spacing: .18em;
+  font-size: .8rem;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+.guarantee-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 720px;
+  letter-spacing: -0.01em;
+}
+.guarantee-text strong {
+  color: var(--red-bright);
+}
+.guarantee-sub {
+  margin: 16px auto 0;
+  max-width: 720px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
 /* ---------- Proof ---------- */
 .proof-grid {
   display: grid;
