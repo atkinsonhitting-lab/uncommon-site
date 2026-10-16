@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>60 Second Hitter Test — UNCOMMON</title>
-<meta name="description" content="12 questions. Find out what's really holding you back at the plate.">
+<meta name="description" content="13 questions. Find out what's really holding you back at the plate.">
 <link rel="stylesheet" href="styles.css">
 <style>
   .quiz-wrap { max-width: 680px; margin: 0 auto; padding: 64px 20px 80px; min-height: 80vh; }
@@ -68,7 +68,7 @@
   <div id="quiz-intro" class="quiz-intro">
     <p class="eyebrow">By Bobby Atkinson</p>
     <h1>The 60 Second <span class="h1-accent">Hitter Test</span></h1>
-    <p>12 questions to find out what's really holding you back at the plate — and what to do about it.</p>
+    <p>13 questions to find out what's really holding you back at the plate — and what to do about it.</p>
     <p style="color:#888; font-size:.95rem;">Takes 60 seconds. Your result unlocks with your phone number.</p>
     <p style="color:var(--red-bright); font-weight:700; font-size:1rem;">Be honest on this — it's the only way to actually help yourself.</p>
     <button class="btn btn-primary quiz-start" onclick="startQuiz()">Start the quiz</button>
@@ -260,6 +260,17 @@ const QUESTIONS = [
       { t: "Just put it in play, keep it simple.", s: "passive" },
       { t: "Repeat exactly what I did mechanically last time.", s: "overthinker" },
       { t: "Stay relaxed, keep doing what's working.", s: "grinder" }
+    ]
+  },
+  {
+    q: "Do you ever take a pitch and wonder why you didn't swing?",
+    elite: "Elite hitters never take a pitch by accident. Every take is a decision — not my pitch, not my zone. If you're taking pitches and wondering why, you don't have a plan. You're just hoping.",
+    a: [
+      { t: "No — if I take it, it wasn't my pitch.", s: "uncommon" },
+      { t: "Yeah, all the time. I freeze up.", s: "passive" },
+      { t: "I take hittable pitches because I'm scared to miss.", s: "shrinking" },
+      { t: "Then I overthink it for the next three pitches.", s: "overthinker" },
+      { t: "Sometimes, when I'm not locked in.", s: "grinder" }
     ]
   }
 ];
