@@ -686,12 +686,16 @@ h3 { font-size: 20px; }
 .guarantee-text strong {
   color: var(--red-bright);
 }
-.guarantee-sub {
-  margin: 16px auto 0;
-  max-width: 720px;
-  color: var(--muted);
-  font-size: 1.05rem;
+.response-promise {
+  margin: 28px auto 0;
+  max-width: 640px;
+  text-align: center;
+  font-size: 1.1rem;
   line-height: 1.6;
+  color: var(--muted);
+}
+.response-promise strong {
+  color: #fff;
 }
 
 /* ---------- Proof ---------- */
