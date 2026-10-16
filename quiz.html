@@ -134,7 +134,8 @@ const QUESTIONS = [
       { t: "Yes — simple plan, hunting something specific.", s: "uncommon" },
       { t: "I have a plan, but it's overcomplicated and analytical.", s: "overthinker" },
       { t: "Not really — I just react to what's thrown.", s: "passive" },
-      { t: "My plan is basically 'don't fail.'", s: "shrinking" }
+      { t: "My plan is basically 'don't fail.'", s: "shrinking" },
+      { t: "Sometimes — depends on the day.", s: "grinder" }
     ]
   },
   {
@@ -144,7 +145,8 @@ const QUESTIONS = [
       { t: "Yes — I know what I'm working on before I show up.", s: "uncommon" },
       { t: "Kind of — I hit until my swing feels good.", s: "passive" },
       { t: "No — I just do whatever drills I feel like.", s: "passive" },
-      { t: "I overplan and never get through it all.", s: "overthinker" }
+      { t: "I overplan and never get through it all.", s: "overthinker" },
+      { t: "I show up and work hard, but I don't plan it out.", s: "grinder" }
     ]
   },
   {
@@ -154,7 +156,8 @@ const QUESTIONS = [
       { t: "Yes — every swing has a job.", s: "uncommon" },
       { t: "Sometimes, when I remember to.", s: "overthinker" },
       { t: "No — I just take my hacks.", s: "passive" },
-      { t: "My goal is just to not look bad.", s: "shrinking" }
+      { t: "My goal is just to not look bad.", s: "shrinking" },
+      { t: "I try to, but I lose focus after a while.", s: "grinder" }
     ]
   },
   {
@@ -164,7 +167,8 @@ const QUESTIONS = [
       { t: "Challenge myself — I train things that are hard.", s: "uncommon" },
       { t: "Feel good — I want to leave the cage confident.", s: "shrinking" },
       { t: "Honestly, I just go through the motions.", s: "passive" },
-      { t: "I drill mechanics until they feel perfect.", s: "overthinker" }
+      { t: "I drill mechanics until they feel perfect.", s: "overthinker" },
+      { t: "A mix — some days I push, some days I just get work in.", s: "grinder" }
     ]
   },
   {
@@ -174,7 +178,8 @@ const QUESTIONS = [
       { t: "Yes — same routine, every game.", s: "uncommon" },
       { t: "I have one, but I skip it when I'm nervous.", s: "shrinking" },
       { t: "No, I just get in the box.", s: "passive" },
-      { t: "My routine is running through mechanical cues.", s: "overthinker" }
+      { t: "My routine is running through mechanical cues.", s: "overthinker" },
+      { t: "Parts of one, but it's not the same every time.", s: "grinder" }
     ]
   },
   {
@@ -185,7 +190,8 @@ const QUESTIONS = [
       { t: "Don't embarrass yourself.", s: "shrinking" },
       { t: "Scared. Afraid to fail.", s: "shrinking" },
       { t: "Just see the ball and react.", s: "passive" },
-      { t: "Remember my mechanics.", s: "overthinker" }
+      { t: "Remember my mechanics.", s: "overthinker" },
+      { t: "Let's compete.", s: "grinder" }
     ]
   },
   {
@@ -195,7 +201,8 @@ const QUESTIONS = [
       { t: "The pitch — was it the right one to swing at?", s: "uncommon" },
       { t: "My swing — did my mechanics look right?", s: "overthinker" },
       { t: "The result — where did the ball go?", s: "passive" },
-      { t: "I try not to think about it at all.", s: "shrinking" }
+      { t: "I try not to think about it at all.", s: "shrinking" },
+      { t: "I notice what happened, but I don't really break it down.", s: "grinder" }
     ]
   },
   {
@@ -205,7 +212,8 @@ const QUESTIONS = [
       { t: "Hunt one zone. Let it eat.", s: "uncommon" },
       { t: "Hopefully he walks me.", s: "shrinking" },
       { t: "Foul stuff off, battle, survive.", s: "passive" },
-      { t: "Analyze every pitch and adjust my mechanics.", s: "overthinker" }
+      { t: "Analyze every pitch and adjust my mechanics.", s: "overthinker" },
+      { t: "Battle — see it deep, put it in play.", s: "grinder" }
     ]
   },
   {
@@ -217,7 +225,8 @@ const QUESTIONS = [
       { t: "Checking my mechanics — was my swing right?", s: "overthinker" },
       { t: "Zoning out until the next one comes.", s: "passive" },
       { t: "Adjusting my gloves, stepping out, stalling.", s: "passive" },
-      { t: "Dreading what's coming next.", s: "shrinking" }
+      { t: "Dreading what's coming next.", s: "shrinking" },
+      { t: "Take a breath and get ready for the next one.", s: "grinder" }
     ]
   },
   {
@@ -227,7 +236,8 @@ const QUESTIONS = [
       { t: "Sit on it. He's throwing it again.", s: "uncommon" },
       { t: "Hope he throws something else.", s: "shrinking" },
       { t: "Just try to make contact with whatever comes.", s: "passive" },
-      { t: "Rebuild my swing path in the on-deck circle.", s: "overthinker" }
+      { t: "Rebuild my swing path in the on-deck circle.", s: "overthinker" },
+      { t: "I know it's coming, but I haven't really adjusted.", s: "grinder" }
     ]
   },
   {
@@ -237,7 +247,8 @@ const QUESTIONS = [
       { t: "I competed with a plan, regardless of result.", s: "uncommon" },
       { t: "I got a hit.", s: "shrinking" },
       { t: "I didn't embarrass myself.", s: "passive" },
-      { t: "My mechanics felt right.", s: "overthinker" }
+      { t: "My mechanics felt right.", s: "overthinker" },
+      { t: "I battled and put together a tough at-bat.", s: "grinder" }
     ]
   },
   {
@@ -247,7 +258,8 @@ const QUESTIONS = [
       { t: "Same plan. Nothing changes.", s: "uncommon" },
       { t: "Don't mess up the perfect day.", s: "shrinking" },
       { t: "Just put it in play, keep it simple.", s: "passive" },
-      { t: "Repeat exactly what I did mechanically last time.", s: "overthinker" }
+      { t: "Repeat exactly what I did mechanically last time.", s: "overthinker" },
+      { t: "Stay relaxed, keep doing what's working.", s: "grinder" }
     ]
   }
 ];
@@ -272,11 +284,16 @@ const PROFILES = {
     title: "The Uncommon Hitter",
     body: "Your mind is already right. You compete, you flush bad at-bats, you want the big moment. Most hitters never get here mentally — you have. So the question is: does your body match your mentality? Because the hitters getting recruited have both.",
     fix: "UNCOMMON Complete builds the physical side to match your mind: movement, med ball, explosiveness, lifting, speed — the measurable tools that get you noticed. Your mentality is the edge. Now build the engine."
+  },
+  grinder: {
+    title: "The Grinder",
+    body: "Shows up every day, competes, does a lot of things right. The foundation is solid — the next step is the edge: preparing with real intent and wanting the big moment. That's what turns good into uncommon.",
+    fix: "UNCOMMON sharpens the edge: intentional training plans with a real goal for every rep, a Lock In routine that gets you competing instead of just showing up, and the physical tools to match. You already do the work — we make the work count."
   }
 };
 
 let qi = 0;
-let scores = { overthinker: 0, shrinking: 0, passive: 0, uncommon: 0 };
+let scores = { overthinker: 0, shrinking: 0, passive: 0, uncommon: 0, grinder: 0 };
 
 function startQuiz() {
   document.getElementById('quiz-intro').classList.add('hidden');
